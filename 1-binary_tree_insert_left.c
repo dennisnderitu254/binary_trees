@@ -8,6 +8,17 @@
  *Return: a pointer to the created node
  */
 
+/* ** FUNCTIONALITY **
+1. If the parent is NULL, return NULL.
+2. Create a new node.
+3. If the new node is NULL, return NULL.
+4. If the parent’s left child is not NULL, set the new node’s left child to the parent’s left child, and set the parent of the parent’s left child to point to the new node.
+5. Set the parent’s left child to point to the new node.
+6. Return a pointer to the new node.
+*/
+/*
+Time Complexity: O(1)
+*/
 binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
 {
 	binary_tree_t *new;
