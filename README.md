@@ -1320,3 +1320,8 @@ alex@/tmp/binary_trees$
 
 - GitHub repository: `binary_trees`
 - File: `18-binary_tree_uncle.c`
+
+Authors
+1. Dennis Nderitu
+2. Karimi Yvonne
+ 
