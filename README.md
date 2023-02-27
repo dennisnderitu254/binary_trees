@@ -1,7 +1,7 @@
 0x1D. C - Binary trees
 ======================
 
-- By Alexandre Gautier
+- By [Dennisnderitu254](https://github.com/dennisnderitu254) and [Karivone](https://github.com/karivone)
 - Weight: 5
 
 Resources
