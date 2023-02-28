@@ -9,7 +9,9 @@
  * FUNCTIONALITY *
  *
  * 1. If the tree is NULL, return 0.
- * 2. If the tree is not NULL, check if the tree has a left or right child. If it does, add 1 to the nodes variable.
+ * 2. If the tree is not NULL, check if the tree has a left or right child.
+ * If it does, add 1 to the nodes variable.
+ *
  * 3. Recursively call the function on the left and right child of the tree.
  * 4. Return the nodes variable.
  *
