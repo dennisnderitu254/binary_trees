@@ -9,7 +9,8 @@
  *FUNCTIONALITY*
  *
  * 1. If the tree is NULL, return 0.
- * 2. If the tree is not NULL, then recursively call the function on the left and right subtrees.
+ * 2. If the tree is not NULL, then recursively call the function
+ * on the left and right subtrees.
  * 3. If the left subtree is NULL, then set the left height to 0.
  * 4. If the right subtree is NULL, then set the right height to 0.
  * 5. Return the max of the left and right heights.
