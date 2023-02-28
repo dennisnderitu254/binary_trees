@@ -19,6 +19,7 @@ int binary_tree_is_perfect(const binary_tree_t *tree);
  *
  * 2. If the node is not NULL, it checks if the node is a leaf.
  * If it is, it returns 1.
+ *
  * 3. If the node is not a leaf, it returns 0.
  *
  */
