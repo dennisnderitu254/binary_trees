@@ -4,13 +4,13 @@
  * binary_tree_delete - Deletes an entire binary tree
  * @tree: Pointer to the root node of the tree to delete
  *
- */
-
-/**
+ *
+ * FUNCTIONALITY
+ *
  * 1. If the tree is not empty, then we recursively
  * call the function on the left and right subtrees.
  *
- * 2. Then we free the memory allocated to the tree.
+ *  2. Then we free the memory allocated to the tree.
  *
  * Time Complexity: O(n)
  */
