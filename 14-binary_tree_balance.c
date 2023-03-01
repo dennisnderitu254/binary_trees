@@ -32,6 +32,7 @@ int binary_tree_balance(const binary_tree_t *tree)
  * FUNCTIONALITY *
  *
  * 1. If the tree is NULL, return 0.
+ *
  * 2. If the tree is not NULL, then calculate the height
  * of the left subtree and right subtree.
  *
