@@ -7,7 +7,10 @@
  * FUNCTIONALITY *
  *
  * 1. If the root is NULL, return NULL.
- * 2. If the root is not NULL, then recursively call the min_finder function on the left subtree.
+ *
+ * 2. If the root is not NULL, then recursively call
+ * the min_finder function on the left subtree.
+ *
  * 3. If the left subtree is NULL, then return the root.
  *
  * Time Complexity: O(h)
