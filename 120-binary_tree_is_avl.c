@@ -45,7 +45,8 @@ int btl(const binary_tree_t *tree)
  *
  * 1. If the tree is empty, return 0.
  * 2. Otherwise, return the difference between the left and right subtrees.
- * 3. The btl function is a helper function that returns the height of the tree.
+ * 3. The btl function is a helper function that
+ * returns the height of the tree.
  *
  * Time Complexity: O(n)
  */
