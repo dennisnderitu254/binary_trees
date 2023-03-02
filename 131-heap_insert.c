@@ -1,92 +1,68 @@
-#include <stdlib.h>
 #include "binary_trees.h"
 
 /**
- * heap_insert - Inserts a value in a Max Binary Heap
- * @root: Double pointer to the root node of the Heap to insert the value
- * @value: Value to store in the node to be inserted
- * Return: Pointer to the created node, or NULL on failure
+ * heap_insert - inserts a value in Max Binary Heap
+ * @root: a double pointer to the root node of the Heap to insert the value
+ * @value: the value to store in the node to be inserted
+ *
+ * Return: a pointer to the created node
+ *         NULL on failure
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-	heap_t *new_node, *parent;
+	heap_t *tree, *new, *flip;
+	int size, leaves, sub, bit, level, tmp;
 
-	if (root == NULL)
+	if (!root)
 		return (NULL);
+	if (!(*root))
+		return (*root = binary_tree_node(NULL, value));
+	tree = *root;
+	size = binary_tree_size(tree);
+	leaves = size;
+	for (level = 0, sub = 1; leaves >= sub; sub *= 2, level++)
+		leaves -= sub;
+	/* subtract all nodes except for bottom-most level */
 
-	/* Create a new node for the value */
-	new_node = binary_tree_node(NULL, value);
-	if (new_node == NULL)
-		return (NULL);
+	for (bit = 1 << (level - 1); bit != 1; bit >>= 1)
+		tree = leaves & bit ? tree->right : tree->left;
+	/*
+	 * Traverse tree to first empty slot based on the binary
+	 * representation of the number of leaves.
+	 * Example -
+	 * If there are 12 nodes in a complete tree, there are 5 leaves on
+	 * the 4th tier of the tree. 5 is 101 in binary. 1 corresponds to
+	 * right, 0 to left.
+	 * The first empty node is 101 == RLR, *root->right->left->right
+	 */
 
-	/* If the heap is empty, make the new node the root */
-	if (*root == NULL)
+	new = binary_tree_node(tree, value);
+	leaves & 1 ? (tree->right = new) : (tree->left = new);
+
+	flip = new;
+	for (; flip->parent && (flip->n > flip->parent->n); flip = flip->parent)
 	{
-		*root = new_node;
-		return (new_node);
+		tmp = flip->n;
+		flip->n = flip->parent->n;
+		flip->parent->n = tmp;
+		new = new->parent;
 	}
+	/* Flip values with parent until parent value exceeds new value */
 
-	/* Traverse the heap to find the right position for the new node */
-	parent = find_parent_node(*root);
-	if (parent->left == NULL)
-		parent->left = new_node;
-	else
-		parent->right = new_node;
-	new_node->parent = parent;
-
-	/* Restore the Max Heap ordering property */
-	heapify_up(new_node);
-
-	return (new_node);
+	return (new);
 }
 
 /**
- * find_parent_node - Finds the parent node for a new node in a Max Binary Heap
- * @root: Pointer to the root node of the Heap
- * Return: Pointer to the parent node for a new node
+ * binary_tree_size - measures the size of a binary tree
+ * @tree: tree to measure the size of
+ *
+ * Return: size of the tree
+ *         0 if tree is NULL
  */
-heap_t *find_parent_node(heap_t *root)
+size_t binary_tree_size(const binary_tree_t *tree)
 {
-	/* Start at the root */
-	heap_t *current = root;
+	if (!tree)
+		return (0);
 
-	/* Traverse the heap until we find an empty spot for the new node */
-	while (current->left != NULL && current->right != NULL)
-	{
-		/* Compare the values of the children to decide which branch to take */
-		if (current->left->n > current->right->n)
-			current = current->left;
-		else
-			current = current->right;
-	}
-
-	return (current);
-}
-
-/**
- * heapify_up - Restores the Max Heap ordering property by swapping nodes
- * @node: Pointer to the node that needs to be moved up
- */
-void heapify_up(heap_t *node)
-{
-	heap_t *parent;
-
-	while (node->parent != NULL && node->n > node->parent->n)
-	{
-		parent = node->parent;
-		swap_nodes(node, parent);
-	}
-}
-
-/**
- * swap_nodes - Swaps the positions of two nodes in a Max Binary Heap
- * @node1: Pointer to the first node
- * @node2: Pointer to the second node
- */
-void swap_nodes(heap_t *node1, heap_t *node2)
-{
-	int temp = node1->n;
-
-	node1->n = node2->n;
-	node2->n = temp;
+	return (binary_tree_size(tree->left) + binary_tree_size(tree->right) + 1);
 }
