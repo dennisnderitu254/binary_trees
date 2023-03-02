@@ -41,7 +41,7 @@ heap_t *heap_insert(heap_t **root, int value)
 		new = binary_tree_node(aux, value);
 		aux->right = new;
 	}
-	while (new->parent != NULL && new->n > new->parent->n)
+	while (new->parent != NULL &&new->n > new->parent->n)
 	{
 		aux_value = new->parent->n;
 		new->parent->n = new->n;
