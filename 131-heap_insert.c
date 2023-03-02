@@ -1,10 +1,7 @@
 #include "binary_trees.h"
-#include <stdlib.h>
-#include <string.h>
-#define INIT_NODE           \
-	{                       \
-		0, NULL, NULL, NULL \
-	}
+#include<stdlib.h>
+#include<string.h>
+#define INIT_NODE {0, NULL, NULL, NULL}
 
 /**
  * swap - swaps two nodes in binary tree
@@ -69,12 +66,11 @@ char *convert(unsigned long int num, int base, int lowercase)
 	char *ptr;
 
 	rep = (lowercase)
-			  ? "0123456789abcdef"
-			  : "0123456789ABCDEF";
+		? "0123456789abcdef"
+		: "0123456789ABCDEF";
 	ptr = &buffer[49];
 	*ptr = 0;
-	do
-	{
+	do {
 		*--ptr = rep[num % base];
 		num /= base;
 	} while (num);
@@ -135,6 +131,7 @@ void insert(heap_t **root, heap_t *node)
 			tmp = tmp->left;
 	}
 }
+
 
 /**
  * heap_insert - inserts a value in Max Binary Heap
