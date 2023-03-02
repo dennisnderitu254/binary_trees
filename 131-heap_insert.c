@@ -1,85 +1,68 @@
-#include <stdlib.h>
 #include "binary_trees.h"
 
 /**
- * heapify - Rearranges the given binary tree rooted at node to satisfy
- * the Max Heap ordering property.
+ * heap_insert - inserts a value in Max Binary Heap
+ * @root: a double pointer to the root node of the Heap to insert the value
+ * @value: the value to store in the node to be inserted
  *
- * @node: A pointer to the root node of the binary tree to be heapified.
+ * Return: a pointer to the created node
+ *         NULL on failure
  */
-void heapify(binary_tree_t *node)
+heap_t *heap_insert(heap_t **root, int value)
 {
-	binary_tree_t *largest = node;
+	heap_t *tree, *new, *flip;
+	int size, leaves, sub, bit, level, tmp;
 
-	if (node->left && node->left->n > largest->n)
-		largest = node->left;
+	if (!root)
+		return (NULL);
+	if (!(*root))
+		return (*root = binary_tree_node(NULL, value));
+	tree = *root;
+	size = binary_tree_size(tree);
+	leaves = size;
+	for (level = 0, sub = 1; leaves >= sub; sub *= 2, level++)
+		leaves -= sub;
+	/* subtract all nodes except for bottom-most level */
 
-	if (node->right && node->right->n > largest->n)
-		largest = node->right;
+	for (bit = 1 << (level - 1); bit != 1; bit >>= 1)
+		tree = leaves & bit ? tree->right : tree->left;
+	/*
+	 * Traverse tree to first empty slot based on the binary
+	 * representation of the number of leaves.
+	 * Example -
+	 * If there are 12 nodes in a complete tree, there are 5 leaves on
+	 * the 4th tier of the tree. 5 is 101 in binary. 1 corresponds to
+	 * right, 0 to left.
+	 * The first empty node is 101 == RLR, *root->right->left->right
+	 */
 
-	if (largest != node)
+	new = binary_tree_node(tree, value);
+	leaves & 1 ? (tree->right = new) : (tree->left = new);
+
+	flip = new;
+	for (; flip->parent && (flip->n > flip->parent->n); flip = flip->parent)
 	{
-		int temp = node->n;
-
-		node->n = largest->n;
-		largest->n = temp;
-		heapify(largest);
+		tmp = flip->n;
+		flip->n = flip->parent->n;
+		flip->parent->n = tmp;
+		new = new->parent;
 	}
+	/* Flip values with parent until parent value exceeds new value */
+
+	return (new);
 }
 
 /**
- * array_to_heap - Builds a Max Binary Heap tree from an array.
+ * binary_tree_size - measures the size of a binary tree
+ * @tree: tree to measure the size of
  *
- * @array: A pointer to the first element of the array to be converted.
- * @size: The number of element in the array.
- *
- * Return: A pointer to the root node of the created Binary Heap, or NULL
- * on failure.
+ * Return: size of the tree
+ *         0 if tree is NULL
  */
-heap_t *array_to_heap(int *array, size_t size)
+size_t binary_tree_size(const binary_tree_t *tree)
 {
-	heap_t *root = NULL;
-	binary_tree_t **queue = NULL;
-	binary_tree_t *node = NULL;
-	size_t i, q_size = 0;
+	if (!tree)
+		return (0);
 
-	if (!array || size == 0)
-		return (NULL);
-
-	for (i = 0; i < size; i++)
-	{
-		node = binary_tree_node(NULL, array[i]);
-		if (!node)
-		{
-			free(queue);
-			binary_tree_delete(root);
-			return (NULL);
-		}
-
-		if (!root)
-			root = node;
-
-		else
-		{
-			node->parent = queue[(i - 1) / 2];
-			if ((i - 1) % 2 == 0)
-				queue[(i - 1) / 2]->left = node;
-			else
-				queue[(i - 1) / 2]->right = node;
-		}
-
-		queue = realloc(queue, sizeof(*queue) * (q_size + 1));
-		if (!queue)
-		{
-			binary_tree_delete(root);
-			return (NULL);
-		}
-		queue[q_size++] = node;
-	}
-
-	for (i = (size - 2) / 2; i + 1 > 0; i--)
-		heapify(queue[i]);
-
-	free(queue);
-	return ((heap_t *)root);
+	return (binary_tree_size(tree->left) + binary_tree_size(tree->right) + 1);
 }
