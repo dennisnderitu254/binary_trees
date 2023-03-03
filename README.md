@@ -2496,3 +2496,16 @@ alex@/tmp/binary_trees$
 
 - GitHub repository: `binary_trees`
 - File: `124-sorted_array_to_avl.c`, `0-binary_tree_node.c`
+
+### 35. Big O #AVL Tree
+
+What are the average time complexities of those operations on an AVL Tree (one answer per line):
+
+- Inserting the value `n`
+- Removing the node with the value `n`
+- Searching for a node in an AVL tree of size n
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `125-O`
