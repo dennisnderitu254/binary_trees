@@ -1321,6 +1321,8 @@ alex@/tmp/binary_trees$
 - GitHub repository: `binary_trees`
 - File: `18-binary_tree_uncle.c`
 
+## ADVANCED TASKS
+
 ### 19. Lowest common ancestor
 
 Write a function that finds the lowest common ancestor of two nodes:
@@ -2959,7 +2961,7 @@ What are the average time complexities of those operations on a Binary Heap (one
 - GitHub repository: `binary_trees`
 - File: `135-O`
 
-AUTHORS
+**AUTHORS**
 
-[Dennis Nderitu](https://github.com/dennisnderitu254)
-[Karimi Yvonne](https://github.com/karivone)
+- [Dennis Nderitu](https://github.com/dennisnderitu254)
+- [Karimi Yvonne](https://github.com/karivone)
