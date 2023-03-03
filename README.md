@@ -1625,3 +1625,130 @@ alex@/tmp/binary_trees$
 
 - GitHub repository: `binary_trees`
 - File: `103-binary_tree_rotate_left.c`
+
+### 23. Rotate right
+
+Write a function that performs a right-rotation on a binary tree
+
+- Prototype: `binary_tree_t *binary_tree_rotate_right(binary_tree_t*tree);`
+- Where `tree` is a pointer to the root node of the tree to rotate
+- Your function must return a pointer to the new root node of the tree once rotated
+
+```
+alex@/tmp/binary_trees$ cat 104-main.c
+#include <stdlib.h>
+#include <stdio.h>
+#include "binary_trees.h"
+
+/**
+ * main - Entry point
+ *
+ * Return: 0 on success, error code on failure
+ */
+int main(void)
+{
+    binary_tree_t *root;
+
+    root = binary_tree_node(NULL, 98);
+    root->left = binary_tree_node(root, 64);
+    root->left->left = binary_tree_node(root->left, 32);
+    binary_tree_print(root);
+    printf("Rotate-right %d\n", root->n);
+    root = binary_tree_rotate_right(root);
+    binary_tree_print(root);
+    printf("\n");
+
+    root->left->left = binary_tree_node(root->left, 20);
+    root->left->right = binary_tree_node(root->left, 56);
+    binary_tree_print(root);
+    printf("Rotate-right %d\n", root->n);
+    root = binary_tree_rotate_right(root);
+    binary_tree_print(root);
+    return (0);
+}
+alex@/tmp/binary_trees$ gcc -Wall -Wextra -Werror -pedantic binary_tree_print.c 104-binary_tree_rotate_right.c 104-main.c 0-binary_tree_node.c -o 104-rotr
+alex@/tmp/binary_trees$ ./104-rotr
+       .--(098)
+  .--(064)
+(032)
+Rotate-right 98
+  .--(064)--.
+(032)     (098)
+
+       .-------(064)--.
+  .--(032)--.       (098)
+(020)     (056)
+Rotate-right 64
+  .--(032)-------.
+(020)       .--(064)--.
+          (056)     (098)
+alex@/tmp/binary_trees$
+```
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `104-binary_tree_rotate_right.c`
+
+### 24. Is BST
+
+Write a function that checks if a binary tree is a valid [Binary Search Tree](https://intranet.alxswe.com/rltoken/qO5dBlMnYJzbaWG3xVpcnQ)
+
+- Prototype: `int binary_tree_is_bst(const binary_tree_t *tree);`
+- Where `tree` is a pointer to the root node of the tree to check
+- Your function must return `1` if `tree` is a valid BST, and `0` otherwise
+- If `tree` is `NULL`, return `0`
+
+```
+alex@/tmp/binary_trees$ cat 110-main.c
+#include <stdlib.h>
+#include <stdio.h>
+#include "binary_trees.h"
+
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+    binary_tree_t *root;
+    int bst;
+
+    root = binary_tree_node(NULL, 98);
+    root->left = binary_tree_node(root, 12);
+    root->right = binary_tree_node(root, 128);
+    root->left->right = binary_tree_node(root->left, 54);
+    root->right->right = binary_tree_node(root, 402);
+    root->left->left = binary_tree_node(root->left, 10);
+
+    binary_tree_print(root);
+    bst = binary_tree_is_bst(root);
+    printf("Is %d bst: %d\n", root->n, bst);
+    bst = binary_tree_is_bst(root->left);
+    printf("Is %d bst: %d\n", root->left->n, bst);
+
+    root->right->left = binary_tree_node(root->right, 97);
+    binary_tree_print(root);
+    bst = binary_tree_is_bst(root);
+    printf("Is %d bst: %d\n", root->n, bst);
+    return (0);
+}
+alex@/tmp/binary_trees$ gcc -Wall -Wextra -Werror -pedantic binary_tree_print.c 110-main.c 110-binary_tree_is_bst.c 0-binary_tree_node.c -o 110-is_bst
+alex@/tmp/binary_trees$ ./110-is_bst
+       .-------(098)--.
+  .--(012)--.       (128)--.
+(010)     (054)          (402)
+Is 98 bst: 1
+Is 12 bst: 1
+       .-------(098)-------.
+  .--(012)--.         .--(128)--.
+(010)     (054)     (097)     (402)
+Is 98 bst: 0
+alex@/tmp/binary_trees$
+```
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `110-binary_tree_is_bst.c`
