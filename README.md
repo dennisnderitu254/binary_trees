@@ -1477,3 +1477,151 @@ alex@/tmp/binary_trees$
 
 - GitHub repository: `binary_trees`
 - File: `101-binary_tree_levelorder.c`
+
+### 21. Is complete
+
+Write a function that checks if a binary tree is complete
+
+- Prototype: `int binary_tree_is_complete(const binary_tree_t *tree);`
+- Where `tree` is a pointer to the root node of the tree to check
+- If `tree` is `NULL`, your function must return `0`
+
+```
+alex@/tmp/binary_trees$ cat 102-main.c
+#include <stdlib.h>
+#include <stdio.h>
+#include "binary_trees.h"
+
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+    binary_tree_t *root;
+    int complete;
+
+    root = binary_tree_node(NULL, 98);
+    root->left = binary_tree_node(root, 12);
+    root->right = binary_tree_node(root, 128);
+    root->left->right = binary_tree_node(root->left, 54);
+    root->right->right = binary_tree_node(root, 402);
+    root->left->left = binary_tree_node(root->left, 10);
+
+    binary_tree_print(root);
+    complete = binary_tree_is_complete(root);
+    printf("Is %d complete: %d\n", root->n, complete);
+    complete = binary_tree_is_complete(root->left);
+    printf("Is %d complete: %d\n", root->left->n, complete);
+
+    root->right->left = binary_tree_node(root->right, 112);
+    binary_tree_print(root);
+    complete = binary_tree_is_complete(root);
+    printf("Is %d complete: %d\n", root->n, complete);
+
+    root->left->left->left = binary_tree_node(root->left->left, 8);
+    binary_tree_print(root);
+    complete = binary_tree_is_complete(root);
+    printf("Is %d complete: %d\n", root->n, complete);
+
+    root->left->right->left = binary_tree_node(root->left->right, 23);
+    binary_tree_print(root);
+    complete = binary_tree_is_complete(root);
+    printf("Is %d complete: %d\n", root->n, complete);
+
+    binary_tree_delete(root);
+    return (0);
+}
+alex@/tmp/binary_trees$ gcc -Wall -Wextra -Werror -pedantic binary_tree_print.c 102-main.c 102-binary_tree_is_complete.c 0-binary_tree_node.c 3-binary_tree_delete.c -o 102-complete
+alex@/tmp/binary_trees$ ./102-complete
+       .-------(098)--.
+  .--(012)--.       (128)--.
+(010)     (054)          (402)
+Is 98 complete: 0
+Is 12 complete: 1
+       .-------(098)-------.
+  .--(012)--.         .--(128)--.
+(010)     (054)     (112)     (402)
+Is 98 complete: 1
+            .-------(098)-------.
+       .--(012)--.         .--(128)--.
+  .--(010)     (054)     (112)     (402)
+(008)
+Is 98 complete: 1
+            .------------(098)-------.
+       .--(012)-------.         .--(128)--.
+  .--(010)       .--(054)     (112)     (402)
+(008)          (023)
+Is 98 complete: 0
+alex@/tmp/binary_trees$
+```
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `102-binary_tree_is_complete.c`
+
+### 22. Rotate left
+
+Write a function that performs a left-rotation on a binary tree
+
+- Prototype: `binary_tree_t *binary_tree_rotate_left(binary_tree_t*tree);`
+- Where `tree` is a pointer to the root node of the tree to rotate
+- Your function must return a pointer to the new root node of the tree once rotated
+
+```
+alex@/tmp/binary_trees$ cat 103-main.c
+#include <stdlib.h>
+#include <stdio.h>
+#include "binary_trees.h"
+
+/**
+ * main - Entry point
+ *
+ * Return: 0 on success, error code on failure
+ */
+int main(void)
+{
+    binary_tree_t *root;
+
+    root = binary_tree_node(NULL, 98);
+    root->right = binary_tree_node(root, 128);
+    root->right->right = binary_tree_node(root->right, 402);
+    binary_tree_print(root);
+    printf("Rotate-left %d\n", root->n);
+    root = binary_tree_rotate_left(root);
+    binary_tree_print(root);
+    printf("\n");
+
+    root->right->right = binary_tree_node(root->right, 450);
+    root->right->left = binary_tree_node(root->right, 420);
+    binary_tree_print(root);
+    printf("Rotate-left %d\n", root->n);
+    root = binary_tree_rotate_left(root);
+    binary_tree_print(root);
+    return (0);
+}
+alex@/tmp/binary_trees$ gcc -Wall -Wextra -Werror -pedantic binary_tree_print.c 103-binary_tree_rotate_left.c 103-main.c 0-binary_tree_node.c -o 103-rotl
+alex@/tmp/binary_trees$ ./103-rotl
+(098)--.
+     (128)--.
+          (402)
+Rotate-left 98
+  .--(128)--.
+(098)     (402)
+
+  .--(128)-------.
+(098)       .--(402)--.
+          (420)     (450)
+Rotate-left 128
+       .-------(402)--.
+  .--(128)--.       (450)
+(098)     (420)
+alex@/tmp/binary_trees$
+```
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `103-binary_tree_rotate_left.c`
