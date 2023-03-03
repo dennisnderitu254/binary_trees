@@ -2509,3 +2509,94 @@ What are the average time complexities of those operations on an AVL Tree (one a
 
 - GitHub repository: `binary_trees`
 - File: `125-O`
+
+### 36. Is Binary heap
+
+Write a function that checks if a binary tree is a valid Max Binary Heap
+
+- Prototype: `int binary_tree_is_heap(const binary_tree_t *tree);`
+- Where `tree` is a pointer to the root node of the tree to check
+- Your function must return `1` if `tree` is a valid Max Binary Heap, and `0` otherwise
+- If `tree` is `NULL`, return `0`
+
+Properties of a Max Binary Heap:
+
+- It’s a complete tree
+- In a Max Binary Heap, the value at root must be maximum among all values present in Binary Heap
+- The last property must be recursively true for all nodes in Binary Tree
+
+```
+alex@/tmp/binary_trees$ cat 130-main.c
+#include <stdlib.h>
+#include <stdio.h>
+#include "binary_trees.h"
+
+/**
+ * basic_tree - Build a basic binary tree
+ *
+ * Return: A pointer to the created tree
+ */
+binary_tree_t *basic_tree(void)
+{
+    binary_tree_t *root;
+
+    root = binary_tree_node(NULL, 98);
+    root->left = binary_tree_node(root, 90);
+    root->right = binary_tree_node(root, 85);
+    root->left->right = binary_tree_node(root->left, 80);
+    root->left->left = binary_tree_node(root->left, 79);
+    return (root);
+}
+
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+    binary_tree_t *root;
+    int heap;
+
+    root = basic_tree();
+
+    binary_tree_print(root);
+    heap = binary_tree_is_heap(root);
+    printf("Is %d heap: %d\n", root->n, heap);
+    heap = binary_tree_is_heap(root->left);
+    printf("Is %d heap: %d\n", root->left->n, heap);
+
+    root->right->left = binary_tree_node(root->right, 97);
+    binary_tree_print(root);
+    heap = binary_tree_is_heap(root);
+    printf("Is %d heap: %d\n", root->n, heap);
+
+    root = basic_tree();
+    root->right->right = binary_tree_node(root->right, 79);
+    binary_tree_print(root);
+    heap = binary_tree_is_heap(root);
+    printf("Is %d heap: %d\n", root->n, heap);
+    return (0);
+}
+alex@/tmp/binary_trees$ gcc -Wall -Wextra -Werror -pedantic binary_tree_print.c 130-main.c 130-binary_tree_is_heap.c 0-binary_tree_node.c -o 130-is_heap
+alex@/tmp/binary_trees$ ./130-is_heap
+       .-------(098)--.
+  .--(090)--.       (085)
+(079)     (080)
+Is 98 heap: 1
+Is 90 heap: 1
+       .-------(098)-------.
+  .--(090)--.         .--(085)
+(079)     (080)     (097)
+Is 98 heap: 0
+       .-------(098)--.
+  .--(090)--.       (085)--.
+(079)     (080)          (079)
+Is 98 heap: 0
+alex@/tmp/binary_trees$
+```
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `130-binary_tree_is_heap.c`
