@@ -2945,3 +2945,21 @@ alex@/tmp/binary_trees$
 
 - GitHub repository: `binary_trees`
 - File: `134-heap_to_sorted_array.c`, `133-heap_extract.c`
+
+### 41. Big O #Binary Heap
+
+What are the average time complexities of those operations on a Binary Heap (one answer per line):
+
+- Inserting the value n
+- Extracting the root node
+- Searching for a node in a binary heap of size n
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `135-O`
+
+AUTHORS
+
+[Dennis Nderitu](https://github.com/dennisnderitu254)
+[Karimi Yvonne](https://github.com/karivone)
