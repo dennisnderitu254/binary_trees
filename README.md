@@ -2036,3 +2036,16 @@ alex@/tmp/binary_trees$
 
 - GitHub repository: `binary_trees`
 - File: `114-bst_remove.c`
+
+### 29. Big O #BST
+
+What are the average time complexities of those operations on a Binary Search Tree (one answer per line):
+
+- Inserting the value `n`
+- Removing the node with the value `n`
+- Searching for a node in a BST of size n
+
+**Repo:**
+
+- GitHub repository: `binary_trees`
+- File: `115-O`
